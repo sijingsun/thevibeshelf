@@ -116,7 +116,7 @@ export default async function HomePage() {
                 textDecoration: "none",
               }}
             >
-              The vibe shelf
+              The Main Shelf
             </Link>
             <Link
               href="/dashboard"

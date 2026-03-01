@@ -3,7 +3,7 @@
 
 -- Board
 INSERT INTO boards (id, owner_id, title, description, is_public) VALUES (
-  '8cb0c064-74bd-42d9-9274-ef70de465006', 'e4ae2ca6-1622-417c-a986-8b9d2774c89b', 'VibeStack — Curated Dev Resources',
+  '8cb0c064-74bd-42d9-9274-ef70de465006', 'e4ae2ca6-1622-417c-a986-8b9d2774c89b', 'The Main Vibe Shelf',
   'A living collection of the best tools, libraries, and references for vibe coding. Contribute to add your own.', true
 ) ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title, description = EXCLUDED.description, is_public = EXCLUDED.is_public;

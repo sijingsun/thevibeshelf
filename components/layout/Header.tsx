@@ -90,7 +90,7 @@ export function Header({ profile }: HeaderProps) {
               textDecoration: "none",
             }}
           >
-            The vibe shelf
+            The Main Shelf
           </Link>
           <Link
             href="/dashboard"
