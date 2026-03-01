@@ -72,17 +72,23 @@ export function AddResourceModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="rounded-2xl shadow-2xl sm:max-w-md"
-        style={{ backgroundColor: "#1A1A1A", borderColor: "#333" }}
+        className="rounded-2xl sm:max-w-md"
+        style={{
+          backgroundColor: "rgba(252,246,233,0.92)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: "1px solid rgba(255,255,255,0.5)",
+          boxShadow: "0 8px 32px rgba(26,25,24,0.12), 0 1px 0 rgba(255,255,255,0.8) inset",
+        }}
       >
         <DialogHeader>
-          <DialogTitle className="text-white">
+          <DialogTitle style={{ fontFamily: "var(--font-eb-garamond)", fontWeight: 400, fontSize: 22, color: "#1A1918", letterSpacing: "-0.3px" }}>
             {isEditing ? "Edit Resource" : "Add Resource"}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
-          <div className="space-y-2">
-            <Label htmlFor="url" style={{ color: "rgba(255,255,255,0.7)" }}>URL</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="url" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>URL</Label>
             <Input
               id="url"
               name="url"
@@ -90,26 +96,26 @@ export function AddResourceModal({
               placeholder="https://example.com"
               defaultValue={editingResource?.url ?? ""}
               required
-              className="rounded-xl text-white placeholder:text-white/30 font-mono text-sm"
-              style={{ backgroundColor: "#0a0a0a", borderColor: "#333" }}
+              className="rounded-xl placeholder:text-[#C4C3C1]"
+              style={{ backgroundColor: "rgba(255,255,255,0.6)", borderColor: "rgba(26,25,24,0.15)", color: "#1A1918", fontFamily: "var(--font-abel)", fontSize: 14 }}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="title" style={{ color: "rgba(255,255,255,0.7)" }}>Title</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="title" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>Title</Label>
             <Input
               id="title"
               name="title"
               placeholder="Resource title"
               defaultValue={editingResource?.title ?? ""}
               required
-              className="rounded-xl text-white placeholder:text-white/30"
-              style={{ backgroundColor: "#0a0a0a", borderColor: "#333" }}
+              className="rounded-xl placeholder:text-[#C4C3C1]"
+              style={{ backgroundColor: "rgba(255,255,255,0.6)", borderColor: "rgba(26,25,24,0.15)", color: "#1A1918", fontFamily: "var(--font-abel)", fontSize: 14 }}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="description" style={{ color: "rgba(255,255,255,0.7)" }}>
+          <div className="space-y-1.5">
+            <Label htmlFor="description" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>
               Description{" "}
-              <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>(optional)</span>
+              <span style={{ color: "#C4C3C1", fontWeight: 400 }}>(optional)</span>
             </Label>
             <Textarea
               id="description"
@@ -117,22 +123,22 @@ export function AddResourceModal({
               placeholder="Brief description…"
               defaultValue={editingResource?.description ?? ""}
               rows={2}
-              className="rounded-xl text-white placeholder:text-white/30 resize-none"
-              style={{ backgroundColor: "#0a0a0a", borderColor: "#333" }}
+              className="rounded-xl placeholder:text-[#C4C3C1] resize-none"
+              style={{ backgroundColor: "rgba(255,255,255,0.6)", borderColor: "rgba(26,25,24,0.15)", color: "#1A1918", fontFamily: "var(--font-abel)", fontSize: 14 }}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="tags" style={{ color: "rgba(255,255,255,0.7)" }}>
+          <div className="space-y-1.5">
+            <Label htmlFor="tags" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>
               Tags{" "}
-              <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>(comma-separated)</span>
+              <span style={{ color: "#C4C3C1", fontWeight: 400 }}>(comma-separated)</span>
             </Label>
             <Input
               id="tags"
               name="tags"
               placeholder="react, typescript, ui"
               defaultValue={editingResource?.tags?.join(", ") ?? ""}
-              className="rounded-xl text-white placeholder:text-white/30"
-              style={{ backgroundColor: "#0a0a0a", borderColor: "#333" }}
+              className="rounded-xl placeholder:text-[#C4C3C1]"
+              style={{ backgroundColor: "rgba(255,255,255,0.6)", borderColor: "rgba(26,25,24,0.15)", color: "#1A1918", fontFamily: "var(--font-abel)", fontSize: 14 }}
             />
           </div>
           <div className="flex gap-3 pt-2">
@@ -140,16 +146,16 @@ export function AddResourceModal({
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 rounded-xl text-white/70 hover:text-white hover:bg-white/10"
-              style={{ backgroundColor: "transparent", borderColor: "#333" }}
+              className="flex-1 rounded-xl"
+              style={{ backgroundColor: "transparent", borderColor: "rgba(26,25,24,0.15)", color: "#6D6C6A", fontFamily: "var(--font-abel)", fontSize: 14 }}
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="flex-1 rounded-xl text-white font-semibold border-0"
-              style={{ backgroundColor: "#FF1F5A" }}
+              className="flex-1 rounded-xl border-0"
+              style={{ backgroundColor: "#1C1C1C", color: "#fff", fontFamily: "var(--font-abel)", fontSize: 14, fontWeight: 600 }}
             >
               {loading ? "Saving…" : isEditing ? "Save Changes" : "Add Resource"}
             </Button>
