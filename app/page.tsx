@@ -1,101 +1,252 @@
-import Image from "next/image";
+import { Suspense } from "react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { KanbanBoard } from "@/components/board/KanbanBoard";
+import type { Board, BoardWithColumns, ColumnWithResources } from "@/lib/types";
 
-export default function Home() {
+export default async function HomePage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const defaultBoardId = process.env.NEXT_PUBLIC_DEFAULT_BOARD_ID;
+
+  let boardWithColumns: BoardWithColumns | null = null;
+
+  if (defaultBoardId) {
+    const { data: rawBoard } = await supabase
+      .from("boards")
+      .select(`*, columns(*, resources(*))`)
+      .eq("id", defaultBoardId)
+      .single();
+
+    if (rawBoard) {
+      const board = rawBoard as Board & { columns: ColumnWithResources[] };
+
+      let upvotedResourceIds = new Set<string>();
+      if (user) {
+        const { data: upvotes } = await supabase
+          .from("upvotes")
+          .select("resource_id")
+          .eq("user_id", user.id);
+        upvotedResourceIds = new Set(
+          ((upvotes ?? []) as { resource_id: string }[]).map((u) => u.resource_id)
+        );
+      }
+
+      const sortedColumns: ColumnWithResources[] = (board.columns ?? [])
+        .slice()
+        .sort((a, b) => a.position - b.position)
+        .map((col) => ({
+          ...col,
+          resources: (col.resources ?? [])
+            .slice()
+            .sort((a, b) => a.position - b.position)
+            .map((r) => ({ ...r, userUpvoted: upvotedResourceIds.has(r.id) })),
+        }));
+
+      boardWithColumns = { ...board, columns: sortedColumns };
+    }
+  }
+
+  const isOwner = !!(user && boardWithColumns && user.id === boardWithColumns.owner_id);
+  const isAuthenticated = !!user;
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* Nav — matches the app header style exactly */}
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          width: "100%",
+          height: 64,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 40px",
+          backgroundColor: "rgba(255,255,255,0.72)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderBottom: "1px solid rgba(26,25,24,0.08)",
+          boxShadow: "0 1px 0 rgba(255,255,255,0.5)",
+          flexShrink: 0,
+        }}
+      >
+        {/* Left: logo + nav links */}
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 32 }}>
+          <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                backgroundColor: "#1C1C1C",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  color: "#fff",
+                  fontWeight: 700,
+                  fontSize: 16,
+                  fontFamily: "var(--font-abel)",
+                  lineHeight: 1,
+                }}
+              >
+                V
+              </span>
+            </div>
+          </Link>
+          <nav style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 28 }}>
+            <Link
+              href="/"
+              style={{
+                fontSize: 14,
+                fontFamily: "var(--font-abel)",
+                color: "#1A1918",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              The vibe shelf
+            </Link>
+            <Link
+              href="/dashboard"
+              style={{
+                fontSize: 14,
+                fontFamily: "var(--font-abel)",
+                color: "#6D6C6A",
+                fontWeight: 400,
+                textDecoration: "none",
+              }}
+            >
+              Your shelf
+            </Link>
+          </nav>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Right: auth buttons or avatar */}
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 12 }}>
+          {user ? (
+            <Link
+              href="/dashboard"
+              style={{
+                padding: "7px 16px",
+                borderRadius: 10,
+                fontSize: 13,
+                fontFamily: "var(--font-abel)",
+                backgroundColor: "#1C1C1C",
+                color: "#fff",
+                textDecoration: "none",
+                fontWeight: 600,
+              }}
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                style={{
+                  fontSize: 13,
+                  fontFamily: "var(--font-abel)",
+                  color: "#6D6C6A",
+                  textDecoration: "none",
+                }}
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/signup"
+                style={{
+                  padding: "7px 16px",
+                  borderRadius: 10,
+                  fontSize: 13,
+                  fontFamily: "var(--font-abel)",
+                  backgroundColor: "#1C1C1C",
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                }}
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+        </div>
+      </header>
+
+      {/* Board content */}
+      {boardWithColumns ? (
+        <div style={{ flex: 1 }}>
+          <Suspense fallback={null}>
+            <KanbanBoard
+              board={boardWithColumns}
+              isOwner={isOwner}
+              isAuthenticated={isAuthenticated}
+            />
+          </Suspense>
+        </div>
+      ) : (
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "80px 24px",
+          }}
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <h1
+            style={{
+              fontFamily: "var(--font-eb-garamond)",
+              fontSize: 48,
+              fontWeight: 400,
+              letterSpacing: "-1.5px",
+              color: "#1A1918",
+              marginBottom: 16,
+            }}
+          >
+            The vibe shelf
+          </h1>
+          <p
+            style={{
+              fontFamily: "var(--font-abel)",
+              fontSize: 14,
+              color: "#9C9B99",
+              marginBottom: 32,
+              maxWidth: 360,
+            }}
+          >
+            Curated dev resources, organized your way.
+          </p>
+          <Link
+            href="/signup"
+            style={{
+              padding: "10px 24px",
+              borderRadius: 12,
+              backgroundColor: "#1C1C1C",
+              color: "#fff",
+              fontFamily: "var(--font-abel)",
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+            }}
+          >
+            Get started
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,26 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 40 60% 97%;
+    --foreground: 20 5% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 5% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 5% 10%;
+    --primary: 172 51% 49%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 30% 92%;
+    --secondary-foreground: 20 5% 10%;
+    --muted: 40 20% 94%;
+    --muted-foreground: 20 5% 43%;
+    --accent: 172 51% 49%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 172 51% 49%;
+    --radius: 0.875rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    /* Background blobs handled by fixed z-index:-1 div in app/layout.tsx */
+    background-color: transparent;
+
+    color: #1a1918;
+    font-family: var(--font-abel), "Abel", sans-serif;
+    font-size: 14px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(26, 25, 24, 0.15);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 25, 24, 0.3);
   }
 }
