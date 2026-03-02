@@ -79,9 +79,10 @@ export function Header({ profile }: HeaderProps) {
         </Link>
 
         {/* Nav links */}
-        <nav style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 28 }}>
+        <nav aria-label="Main navigation" style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 28 }}>
           <Link
             href="/"
+            aria-current={pathname === "/" ? "page" : undefined}
             style={{
               fontSize: 14,
               fontFamily: "var(--font-abel)",
@@ -94,6 +95,7 @@ export function Header({ profile }: HeaderProps) {
           </Link>
           <Link
             href="/dashboard"
+            aria-current={pathname.startsWith("/dashboard") ? "page" : undefined}
             style={{
               fontSize: 14,
               fontFamily: "var(--font-abel)",
@@ -112,6 +114,7 @@ export function Header({ profile }: HeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
+              aria-label="Open user menu"
               style={{
                 width: 32,
                 height: 32,

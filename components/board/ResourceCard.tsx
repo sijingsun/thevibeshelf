@@ -245,8 +245,9 @@ export function ResourceCard({
                       className="h-6 w-6 flex-shrink-0 rounded-lg"
                       style={{ color: "#9C9B99" }}
                       onClick={(e) => e.stopPropagation()}
+                      aria-label="Resource options"
                     >
-                      <MoreHorizontal className="w-3.5 h-3.5" />
+                      <MoreHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
@@ -263,7 +264,7 @@ export function ResourceCard({
                       className="cursor-pointer rounded-lg hover:bg-black/5 focus:bg-black/5"
                       style={{ color: "#1A1918" }}
                     >
-                      <Pencil className="w-3.5 h-3.5 mr-2" />
+                      <Pencil className="w-3.5 h-3.5 mr-2" aria-hidden="true" />
                       Edit
                     </DropdownMenuItem>
                     <DropdownMenuItem
@@ -272,7 +273,7 @@ export function ResourceCard({
                       style={{ color: "#1A1918" }}
                     >
                       <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-3.5 h-3.5 mr-2" />
+                        <ExternalLink className="w-3.5 h-3.5 mr-2" aria-hidden="true" />
                         Open link
                       </a>
                     </DropdownMenuItem>
@@ -281,7 +282,7 @@ export function ResourceCard({
                       className="cursor-pointer rounded-lg hover:bg-red-50 focus:bg-red-50"
                       style={{ color: "#EF4444" }}
                     >
-                      <Trash2 className="w-3.5 h-3.5 mr-2" />
+                      <Trash2 className="w-3.5 h-3.5 mr-2" aria-hidden="true" />
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -342,6 +343,8 @@ export function ResourceCard({
             >
               <button
                 onClick={handleUpvote}
+                aria-label={upvoted ? "Remove upvote" : "Upvote"}
+                aria-pressed={upvoted}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -356,6 +359,7 @@ export function ResourceCard({
                 }}
               >
                 <ArrowUp
+                  aria-hidden="true"
                   style={{
                     width: 14,
                     height: 14,

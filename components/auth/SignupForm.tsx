@@ -73,9 +73,13 @@ export function SignupForm() {
           placeholder="••••••••"
           minLength={8}
           required
+          aria-describedby="password-hint"
           className="placeholder:text-[#C4C3C1]"
           style={inputStyle}
         />
+        <p id="password-hint" style={{ fontSize: 12, color: "#9C9B99", fontFamily: "var(--font-abel)", margin: 0 }}>
+          Minimum 8 characters
+        </p>
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="confirm_password" style={labelStyle}>Confirm Password</Label>

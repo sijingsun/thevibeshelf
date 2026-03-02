@@ -89,7 +89,7 @@ export function Column({
               {filteredResources.length}
             </span>
           </div>
-          <MoreHorizontal style={{ width: 16, height: 16, color: "#9C9B99" }} />
+          <MoreHorizontal style={{ width: 16, height: 16, color: "#9C9B99" }} aria-hidden="true" />
         </div>
 
         {/* Cards droppable area */}
@@ -147,6 +147,7 @@ export function Column({
         {isOwner && (
           <button
             onClick={() => setAddOpen(true)}
+            aria-label={`Add resource to ${column.title}`}
             style={{
               width: "100%",
               display: "flex",
@@ -165,7 +166,7 @@ export function Column({
             onMouseEnter={(e) => (e.currentTarget.style.color = "#6D6C6A")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "#9C9B99")}
           >
-            <Plus style={{ width: 14, height: 14 }} />
+            <Plus style={{ width: 14, height: 14 }} aria-hidden="true" />
             Add resource
           </button>
         )}

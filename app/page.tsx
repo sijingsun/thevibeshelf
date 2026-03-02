@@ -90,7 +90,7 @@ export default async function HomePage() {
       >
         {/* Left: logo + nav links */}
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 32 }}>
-          <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
+          <Link href="/" aria-label="The Vibe Shelf — home" style={{ textDecoration: "none", flexShrink: 0 }}>
             <div
               style={{
                 width: 36,
@@ -116,9 +116,10 @@ export default async function HomePage() {
               </span>
             </div>
           </Link>
-          <nav style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 28 }}>
+          <nav aria-label="Main navigation" style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 28 }}>
             <Link
               href="/"
+              aria-current="page"
               style={{
                 fontSize: 14,
                 fontFamily: "var(--font-abel)",

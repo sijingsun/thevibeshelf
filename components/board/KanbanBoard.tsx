@@ -177,6 +177,7 @@ function KanbanBoardInner({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search resources…"
+              aria-label="Search resources"
               style={{
                 padding: "8px 14px",
                 borderRadius: 10,
@@ -198,6 +199,7 @@ function KanbanBoardInner({
                   <button
                     key={tag}
                     onClick={() => toggleTagFilter(tag)}
+                    aria-pressed={activeTagFilters.includes(tag)}
                     style={{
                       padding: "8px 14px",
                       borderRadius: 10,
@@ -222,6 +224,7 @@ function KanbanBoardInner({
                 {activeTagFilters.length > 0 && (
                   <button
                     onClick={clearFilters}
+                    aria-label="Clear tag filters"
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -236,7 +239,7 @@ function KanbanBoardInner({
                       cursor: "pointer",
                     }}
                   >
-                    <X style={{ width: 12, height: 12 }} />
+                    <X style={{ width: 12, height: 12 }} aria-hidden="true" />
                     Clear
                   </button>
                 )}

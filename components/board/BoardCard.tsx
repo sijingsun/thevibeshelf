@@ -52,9 +52,9 @@ export function BoardCard({ board }: BoardCardProps) {
             {board.title}
           </h3>
           {board.is_public ? (
-            <Globe style={{ width: "15px", height: "15px", color: "#9C9B99", flexShrink: 0, marginTop: "3px" }} />
+            <Globe role="img" aria-label="Public board" style={{ width: "15px", height: "15px", color: "#9C9B99", flexShrink: 0, marginTop: "3px" }} />
           ) : (
-            <Lock style={{ width: "15px", height: "15px", color: "#9C9B99", flexShrink: 0, marginTop: "3px" }} />
+            <Lock role="img" aria-label="Private board" style={{ width: "15px", height: "15px", color: "#9C9B99", flexShrink: 0, marginTop: "3px" }} />
           )}
         </div>
 
@@ -87,16 +87,18 @@ export function BoardCard({ board }: BoardCardProps) {
         >
           <span
             className="flex items-center gap-1"
+            aria-label={`${board.column_count ?? 0} columns`}
             style={{ fontSize: "11px", color: "#9C9B99", fontFamily: "var(--font-abel)" }}
           >
-            <Layers style={{ width: "12px", height: "12px" }} />
+            <Layers style={{ width: "12px", height: "12px" }} aria-hidden="true" />
             {board.column_count ?? 0}
           </span>
           <span
             className="flex items-center gap-1"
+            aria-label={`${board.resource_count ?? 0} resources`}
             style={{ fontSize: "11px", color: "#9C9B99", fontFamily: "var(--font-abel)" }}
           >
-            <FileText style={{ width: "12px", height: "12px" }} />
+            <FileText style={{ width: "12px", height: "12px" }} aria-hidden="true" />
             {board.resource_count ?? 0}
           </span>
           <span

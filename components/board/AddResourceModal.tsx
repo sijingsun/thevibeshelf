@@ -115,7 +115,7 @@ export function AddResourceModal({
           <div className="space-y-1.5">
             <Label htmlFor="description" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>
               Description{" "}
-              <span style={{ color: "#C4C3C1", fontWeight: 400 }}>(optional)</span>
+              <span aria-hidden="true" style={{ color: "#C4C3C1", fontWeight: 400 }}>(optional)</span>
             </Label>
             <Textarea
               id="description"
@@ -130,7 +130,7 @@ export function AddResourceModal({
           <div className="space-y-1.5">
             <Label htmlFor="tags" style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A", fontWeight: 400 }}>
               Tags{" "}
-              <span style={{ color: "#C4C3C1", fontWeight: 400 }}>(comma-separated)</span>
+              <span aria-hidden="true" style={{ color: "#C4C3C1", fontWeight: 400 }}>(comma-separated)</span>
             </Label>
             <Input
               id="tags"

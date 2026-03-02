@@ -27,6 +27,7 @@ export function AvatarDropdown({ displayName, username, email }: AvatarDropdownP
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
+          aria-label="Open user menu"
           style={{
             width: 32,
             height: 32,
