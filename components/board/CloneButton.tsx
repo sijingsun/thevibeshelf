@@ -60,42 +60,74 @@ export function CloneButton({
             padding: "8px 14px",
             borderRadius: "100px",
             fontSize: "13px",
-            border: "1px solid #333",
-            color: "rgba(255,255,255,0.7)",
-            background: "transparent",
+            fontFamily: "var(--font-abel)",
+            border: "1px solid rgba(26,25,24,0.12)",
+            color: "#1A1918",
+            backgroundColor: "rgba(255,255,255,0.56)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             gap: "6px",
-            transition: "border-color 0.2s",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#666")}
-          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#333")}
         >
           <Copy style={{ width: "13px", height: "13px" }} />
           Clone Board
         </button>
       </DialogTrigger>
       <DialogContent
-        className="rounded-2xl shadow-2xl sm:max-w-sm"
-        style={{ backgroundColor: "#1A1A1A", borderColor: "#333" }}
+        className="rounded-2xl sm:max-w-sm"
+        style={{
+          backgroundColor: "rgba(252,246,233,0.95)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: "1px solid rgba(255,255,255,0.5)",
+          boxShadow: "0 8px 32px rgba(26,25,24,0.12)",
+        }}
       >
         <DialogHeader>
-          <DialogTitle className="text-white">Clone Board</DialogTitle>
+          <DialogTitle
+            style={{
+              fontFamily: "var(--font-eb-garamond)",
+              fontWeight: 400,
+              fontSize: 22,
+              color: "#1A1918",
+            }}
+          >
+            Clone Board
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleClone} className="space-y-4 pt-2">
           <div className="space-y-2">
-            <Label htmlFor="clone-title" style={{ color: "rgba(255,255,255,0.7)" }}>New Board Title</Label>
+            <Label
+              htmlFor="clone-title"
+              style={{
+                fontFamily: "var(--font-abel)",
+                fontSize: 13,
+                color: "#6D6C6A",
+                fontWeight: 400,
+              }}
+            >
+              New Board Title
+            </Label>
             <Input
               id="clone-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="rounded-xl text-white"
-              style={{ backgroundColor: "#0a0a0a", borderColor: "#333" }}
+              className="placeholder:text-[#C4C3C1]"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.6)",
+                borderColor: "rgba(26,25,24,0.15)",
+                color: "#1A1918",
+                fontFamily: "var(--font-abel)",
+                fontSize: 14,
+                borderRadius: 10,
+              }}
             />
           </div>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+          <p className="text-xs" style={{ color: "#9C9B99", fontFamily: "var(--font-abel)" }}>
             All columns and resources will be copied to your account.
           </p>
           <div className="flex gap-3">
@@ -103,16 +135,26 @@ export function CloneButton({
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
-              className="flex-1 rounded-xl text-white/70 hover:text-white hover:bg-white/10"
-              style={{ backgroundColor: "transparent", borderColor: "#333" }}
+              className="flex-1 rounded-xl hover:bg-black/5"
+              style={{
+                backgroundColor: "transparent",
+                borderColor: "rgba(26,25,24,0.15)",
+                color: "#1A1918",
+                fontFamily: "var(--font-abel)",
+              }}
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={loading || !title.trim()}
-              className="flex-1 rounded-xl text-white font-semibold border-0"
-              style={{ backgroundColor: "#FF1F5A" }}
+              className="flex-1 rounded-xl border-0"
+              style={{
+                backgroundColor: "#1C1C1C",
+                color: "#fff",
+                fontFamily: "var(--font-abel)",
+                fontWeight: 600,
+              }}
             >
               {loading ? "Cloning…" : "Clone"}
             </Button>
