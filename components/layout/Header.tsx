@@ -145,6 +145,7 @@ export function Header({ profile }: HeaderProps) {
               backgroundColor: "#fff",
               borderColor: "rgba(26,25,24,0.1)",
               boxShadow: "0 8px 24px rgba(26,25,24,0.12)",
+              zIndex: 200,
             }}
           >
             <div className="px-3 py-2">
