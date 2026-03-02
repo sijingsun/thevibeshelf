@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { KanbanBoard } from "@/components/board/KanbanBoard";
+import { AvatarDropdown } from "@/components/layout/AvatarDropdown";
 import type { Board, BoardWithColumns, ColumnWithResources } from "@/lib/types";
 
 export default async function HomePage() {
@@ -146,36 +147,11 @@ export default async function HomePage() {
         {/* Right: avatar or auth buttons */}
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 12 }}>
           {user ? (
-            <Link href="/dashboard" style={{ textDecoration: "none", flexShrink: 0 }}>
-              <div
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #3FBFAD 0%, #5B9BD5 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <span
-                  style={{
-                    color: "#fff",
-                    fontFamily: "var(--font-abel)",
-                    fontWeight: 600,
-                    fontSize: 13,
-                    lineHeight: 1,
-                  }}
-                >
-                  {profile?.display_name
-                    ? profile.display_name.charAt(0).toUpperCase()
-                    : profile?.username
-                    ? profile.username.charAt(0).toUpperCase()
-                    : user.email?.charAt(0).toUpperCase() ?? "?"}
-                </span>
-              </div>
-            </Link>
+            <AvatarDropdown
+              displayName={profile?.display_name ?? null}
+              username={profile?.username ?? null}
+              email={user.email ?? null}
+            />
           ) : (
             <>
               <Link
