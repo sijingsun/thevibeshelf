@@ -36,10 +36,12 @@ export default async function BoardSettingsPage({ params }: SettingsPageProps) {
   }
 
   return (
-    <div className="px-6 py-8 max-w-2xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-100">Board Settings</h1>
-        <p className="text-zinc-500 text-sm mt-1">{board.title}</p>
+    <div style={{ padding: "40px", maxWidth: 640, margin: "0 auto" }}>
+      <div style={{ marginBottom: 32 }}>
+        <h1 style={{ fontFamily: "var(--font-eb-garamond)", fontSize: 36, fontWeight: 400, letterSpacing: "-0.5px", color: "#1A1918", marginBottom: 6 }}>
+          Board Settings
+        </h1>
+        <p style={{ fontFamily: "var(--font-abel)", fontSize: 14, color: "#9C9B99" }}>{board.title}</p>
       </div>
       <BoardSettingsForm board={board} />
     </div>

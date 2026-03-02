@@ -60,36 +60,67 @@ export function BoardSettingsForm({ board }: BoardSettingsFormProps) {
     }
   }
 
+  const cardStyle = {
+    backgroundColor: "rgba(255,255,255,0.72)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    border: "1px solid rgba(255,255,255,0.5)",
+    boxShadow: "0 4px 24px rgba(26,25,24,0.06), 0 1px 0 rgba(255,255,255,0.8) inset",
+    borderRadius: 16,
+    padding: 24,
+  };
+
+  const inputStyle = {
+    backgroundColor: "rgba(255,255,255,0.6)",
+    borderColor: "rgba(26,25,24,0.15)",
+    color: "#1A1918",
+    fontFamily: "var(--font-abel)",
+    fontSize: 14,
+    borderRadius: 10,
+  };
+
+  const labelStyle = {
+    fontFamily: "var(--font-abel)",
+    fontSize: 13,
+    color: "#6D6C6A",
+    fontWeight: 400,
+  };
+
   return (
-    <div className="space-y-8">
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       {/* General Settings */}
-      <form onSubmit={handleSave} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
-        <h2 className="text-base font-semibold text-zinc-100">General</h2>
-        <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
+      <form onSubmit={handleSave} style={{ ...cardStyle, display: "flex", flexDirection: "column", gap: 16 }}>
+        <h2 style={{ fontFamily: "var(--font-abel)", fontSize: 15, fontWeight: 600, color: "#1A1918", margin: 0 }}>General</h2>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <Label htmlFor="title" style={labelStyle}>Title</Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="bg-zinc-800 border-zinc-700 focus:border-amber-400"
+            className="placeholder:text-[#C4C3C1]"
+            style={inputStyle}
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <Label htmlFor="description" style={labelStyle}>Description</Label>
           <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
-            className="bg-zinc-800 border-zinc-700 focus:border-amber-400 resize-none"
             placeholder="Describe your board…"
+            className="resize-none placeholder:text-[#C4C3C1]"
+            style={inputStyle}
           />
         </div>
-        <div className="flex items-center justify-between py-1">
-          <Label htmlFor="is_public" className="cursor-pointer">
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 0" }}>
+          <Label htmlFor="is_public" style={{ ...labelStyle, cursor: "pointer" }}>
             Public board
-            <span className="block text-xs text-zinc-500 font-normal">
+            <span style={{ display: "block", fontSize: 12, color: "#9C9B99", fontWeight: 400 }}>
               Visible on Explore page
             </span>
           </Label>
@@ -97,55 +128,61 @@ export function BoardSettingsForm({ board }: BoardSettingsFormProps) {
             id="is_public"
             checked={isPublic}
             onCheckedChange={setIsPublic}
-            className="data-[state=checked]:bg-amber-400"
           />
         </div>
-        <Button
-          type="submit"
-          disabled={saving}
-          className="bg-amber-400 text-zinc-950 hover:bg-amber-300 font-semibold"
-        >
-          {saving ? "Saving…" : "Save Changes"}
-        </Button>
+
+        <div>
+          <Button
+            type="submit"
+            disabled={saving}
+            style={{ backgroundColor: "#1C1C1C", color: "#fff", fontFamily: "var(--font-abel)", fontSize: 14, fontWeight: 600, borderRadius: 10, border: "none" }}
+          >
+            {saving ? "Saving…" : "Save Changes"}
+          </Button>
+        </div>
       </form>
 
-      <Separator className="bg-zinc-800" />
+      <Separator style={{ backgroundColor: "rgba(26,25,24,0.08)" }} />
 
       {/* Danger Zone */}
-      <div className="bg-zinc-900 border border-red-900/50 rounded-xl p-6">
-        <h2 className="text-base font-semibold text-red-400 mb-1">Danger Zone</h2>
-        <p className="text-sm text-zinc-500 mb-4">
-          Permanently delete this board and all its columns and resources.
-          This action cannot be undone.
+      <div style={{ ...cardStyle, border: "1px solid rgba(239,68,68,0.2)" }}>
+        <h2 style={{ fontFamily: "var(--font-abel)", fontSize: 15, fontWeight: 600, color: "#EF4444", marginBottom: 6 }}>Danger Zone</h2>
+        <p style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#9C9B99", marginBottom: 16 }}>
+          Permanently delete this board and all its columns and resources. This action cannot be undone.
         </p>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
-              className="border-red-800 text-red-400 hover:bg-red-900/30 hover:text-red-300 bg-transparent"
+              style={{ borderColor: "rgba(239,68,68,0.3)", color: "#EF4444", backgroundColor: "transparent", fontFamily: "var(--font-abel)", fontSize: 13, borderRadius: 10 }}
             >
               Delete Board
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="bg-zinc-900 border-zinc-700">
+          <AlertDialogContent
+            className="rounded-2xl"
+            style={{ backgroundColor: "rgba(252,246,233,0.95)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.5)", boxShadow: "0 8px 32px rgba(26,25,24,0.12)" }}
+          >
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-zinc-100">
+              <AlertDialogTitle style={{ fontFamily: "var(--font-eb-garamond)", fontWeight: 400, fontSize: 22, color: "#1A1918" }}>
                 Delete &ldquo;{board.title}&rdquo;?
               </AlertDialogTitle>
-              <AlertDialogDescription className="text-zinc-400">
-                This will permanently delete the board and all{" "}
-                {board.title}&apos;s columns and resources. This action cannot
-                be undone.
+              <AlertDialogDescription style={{ fontFamily: "var(--font-abel)", fontSize: 13, color: "#6D6C6A" }}>
+                This will permanently delete the board and all its columns and resources. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="border-zinc-700 bg-transparent hover:bg-zinc-800 text-zinc-300">
+              <AlertDialogCancel
+                className="rounded-xl hover:bg-black/5"
+                style={{ backgroundColor: "transparent", borderColor: "rgba(26,25,24,0.15)", color: "#1A1918", fontFamily: "var(--font-abel)" }}
+              >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleDelete}
                 disabled={deleting}
-                className="bg-red-600 hover:bg-red-500 text-white"
+                className="rounded-xl border-0"
+                style={{ backgroundColor: "#EF4444", color: "#fff", fontFamily: "var(--font-abel)", fontWeight: 600 }}
               >
                 {deleting ? "Deleting…" : "Delete Board"}
               </AlertDialogAction>
