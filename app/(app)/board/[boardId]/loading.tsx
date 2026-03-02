@@ -1,53 +1,78 @@
-import { Skeleton } from "@/components/ui/skeleton";
-
 export default function BoardLoading() {
   return (
-    <div className="flex flex-col h-[calc(100vh-56px)]">
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 64px)" }}>
       {/* Board header skeleton */}
-      <div className="flex items-center gap-4 px-6 py-3 border-b border-zinc-800">
-        <div className="flex-1 space-y-1.5">
-          <Skeleton className="h-6 w-48 bg-zinc-800" />
-          <Skeleton className="h-3 w-64 bg-zinc-800" />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          padding: "12px 24px",
+          borderBottom: "1px solid rgba(26,25,24,0.08)",
+        }}
+      >
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+          <div style={{ width: 192, height: 22, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.07)" }} />
+          <div style={{ width: 256, height: 12, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.05)" }} />
         </div>
-        <Skeleton className="h-8 w-28 bg-zinc-800" />
+        <div style={{ width: 112, height: 32, borderRadius: 10, backgroundColor: "rgba(26,25,24,0.07)" }} />
       </div>
 
       {/* Columns skeleton */}
-      <div className="flex gap-4 overflow-x-auto px-6 pb-6 pt-4 flex-1">
+      <div
+        style={{
+          display: "flex",
+          gap: 16,
+          overflowX: "auto",
+          padding: "16px 24px 24px",
+          flex: 1,
+        }}
+      >
         {Array.from({ length: 5 }).map((_, i) => (
           <div
             key={i}
-            className="bg-zinc-900 rounded-xl w-80 flex-shrink-0 p-4 space-y-3 h-[calc(100vh-160px)]"
+            style={{
+              backgroundColor: "rgba(255,255,255,0.56)",
+              border: "1px solid rgba(255,255,255,0.5)",
+              borderRadius: 16,
+              width: 300,
+              flexShrink: 0,
+              padding: 16,
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+            }}
           >
             {/* Column header */}
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-              <Skeleton className="h-4 w-32 bg-zinc-800" />
-              <Skeleton className="h-4 w-6 bg-zinc-800 ml-auto" />
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "rgba(26,25,24,0.1)" }} />
+              <div style={{ width: 120, height: 14, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.08)" }} />
+              <div style={{ width: 24, height: 14, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.06)", marginLeft: "auto" }} />
             </div>
 
             {/* Card skeletons */}
-            <div className="space-y-2">
-              {Array.from({ length: Math.floor(Math.random() * 3) + 1 }).map(
-                (_, j) => (
-                  <div
-                    key={j}
-                    className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 space-y-2"
-                  >
-                    <div className="flex gap-2">
-                      <Skeleton className="h-4 w-4 bg-zinc-700 rounded-sm" />
-                      <Skeleton className="h-4 flex-1 bg-zinc-700" />
-                    </div>
-                    <Skeleton className="h-3 w-3/4 bg-zinc-700" />
-                    <Skeleton className="h-3 w-full bg-zinc-700" />
-                    <div className="flex gap-1">
-                      <Skeleton className="h-4 w-12 bg-zinc-700 rounded-full" />
-                      <Skeleton className="h-4 w-14 bg-zinc-700 rounded-full" />
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
+            {Array.from({ length: i % 2 === 0 ? 3 : 2 }).map((_, j) => (
+              <div
+                key={j}
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.72)",
+                  border: "1px solid rgba(26,25,24,0.06)",
+                  borderRadius: 12,
+                  padding: 12,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 8,
+                }}
+              >
+                <div style={{ width: "75%", height: 14, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.07)" }} />
+                <div style={{ width: "100%", height: 12, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.05)" }} />
+                <div style={{ width: "60%", height: 12, borderRadius: 6, backgroundColor: "rgba(26,25,24,0.05)" }} />
+                <div style={{ display: "flex", gap: 6, marginTop: 2 }}>
+                  <div style={{ width: 48, height: 16, borderRadius: 20, backgroundColor: "rgba(26,25,24,0.06)" }} />
+                  <div style={{ width: 56, height: 16, borderRadius: 20, backgroundColor: "rgba(26,25,24,0.06)" }} />
+                </div>
+              </div>
+            ))}
           </div>
         ))}
       </div>
